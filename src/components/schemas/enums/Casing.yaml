@@ -1,0 +1,9 @@
+type: string
+description:
+  $ref: "./descriptions/Casing.md"
+enum:
+  - "camel"
+  - "pascal"
+  - "lower underscore"
+  - "upper underscore"
+  - "hyphen"

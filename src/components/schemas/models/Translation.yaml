@@ -1,0 +1,24 @@
+type: object
+description:
+  $ref: "./descriptions/Translation.md"
+required:
+  - etymology
+  - pos
+  - text
+  - labels
+  - note
+properties:
+  etymology:
+    type: integer
+    format: int64
+  pos:
+    $ref: "../enums/TranslationPos.yaml"
+  text:
+    type: string
+  labels:
+    type: array
+    items:
+      type: string
+  note:
+    type: string
+    nullable: true

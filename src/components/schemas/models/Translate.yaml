@@ -1,0 +1,20 @@
+type: object
+description:
+  $ref: "./descriptions/Translate.md"
+required:
+  - successful
+  - text
+  - translated_text
+  - words
+properties:
+  successful:
+    type: boolean
+    description: 翻訳が成功したかどうか
+  text:
+    type: string
+  translated_text:
+    type: string
+  words:
+    type: array
+    items:
+      $ref: "./Word.yaml"

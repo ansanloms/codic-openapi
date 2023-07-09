@@ -1,0 +1,17 @@
+type: object
+description:
+  $ref: "./descriptions/Error.md"
+required:
+  - code
+  - message
+  - context
+properties:
+  code:
+    type: integer
+    description: エラーコード
+  message:
+    type: string
+    description: エラー情報
+  context:
+    type: string
+    nullable: true

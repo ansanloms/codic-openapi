@@ -1,0 +1,14 @@
+- successful: false
+  text: こんにちわ世界
+  translated_text: hello_世界
+  words:
+    - successful: true
+      text: こんにちわ
+      translated_text: hello
+      candidates:
+        - text: hello
+        - text: hi
+    - successful: false
+      text: 世界
+      translated_text:
+      candidates: []

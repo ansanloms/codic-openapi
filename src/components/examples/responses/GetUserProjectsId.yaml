@@ -1,0 +1,7 @@
+id: 123
+name: My Project
+created_on: Thu, 01 Jan 2015 00:00:01 +0900
+words_count: 2000
+owner:
+  id: 9001
+  name: 山田 太郎

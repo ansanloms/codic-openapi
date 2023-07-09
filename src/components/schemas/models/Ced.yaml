@@ -1,0 +1,26 @@
+type: object
+description:
+  $ref: "./descriptions/Ced.md"
+required:
+  - id
+  - title
+  - digest
+properties:
+  id:
+    type: integer
+    format: int64
+  title:
+    type: string
+  digest:
+    type: string
+  pronunciations:
+    type: array
+    items:
+      $ref: "./Pronunciation.yaml"
+  translations:
+    type: array
+    items:
+      $ref: "./Translation.yaml"
+  note:
+    type: string
+    nullable: true

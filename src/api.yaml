@@ -1,30 +1,65 @@
 openapi: 3.1.0
 info:
-  version: 0.0.1
-  title: OpenAPI Sample
+  version: 1.0.0
+  title: Codic API
   description:
     $ref: ./description.md
 servers:
-  - url: "https://api.example.com"
+  - url: "https://api.codic.jp"
     description: Production Server
 paths:
-  /users:
-    $ref: ./components/paths/users.yaml
-  "/users/{id}":
-    $ref: "./components/paths/users.{id}.yaml"
+  "/v1/ced/entries/{id}.json":
+    $ref: "./components/paths/v1.ced.entries.{id}.json.yaml"
+  /v1/ced/lookup.json:
+    $ref: ./components/paths/v1.ced.lookup.json.yaml
+  /v1/engine/translate.json:
+    $ref: ./components/paths/v1.engine.translate.json.yaml
+  /v1/user_projects.json:
+    $ref: ./components/paths/v1.user_projects.json.yaml
+  "/v1/user_projects/{id}.json":
+    $ref: "./components/paths/v1.user_projects.{id}.json.yaml"
 components:
+  securitySchemes:
+    bearerAuth:
+      $ref: ./components/security-schemes/bearer-auth.yaml
   schemas:
-    User:
-      $ref: ./components/schemas/models/User.yaml
-    EnumStatus:
-      $ref: ./components/schemas/enums/Status.yaml
-    RequestPostUsers:
-      $ref: ./components/schemas/requests/PostUsers.yaml
-    RequestPutUserId:
-      $ref: ./components/schemas/requests/PutUserId.yaml
+    Candidate:
+      $ref: ./components/schemas/models/Candidate.yaml
+    Ced:
+      $ref: ./components/schemas/models/Ced.yaml
+    Error:
+      $ref: ./components/schemas/models/Error.yaml
+    Owner:
+      $ref: ./components/schemas/models/Owner.yaml
+    Project:
+      $ref: ./components/schemas/models/Project.yaml
+    Pronunciation:
+      $ref: ./components/schemas/models/Pronunciation.yaml
+    Translate:
+      $ref: ./components/schemas/models/Translate.yaml
+    Translation:
+      $ref: ./components/schemas/models/Translation.yaml
+    Word:
+      $ref: ./components/schemas/models/Word.yaml
+    EnumAcronymStyle:
+      $ref: ./components/schemas/enums/AcronymStyle.yaml
+    EnumCasing:
+      $ref: ./components/schemas/enums/Casing.yaml
+    EnumPronunciationType:
+      $ref: ./components/schemas/enums/PronunciationType.yaml
+    EnumTranslationPos:
+      $ref: ./components/schemas/enums/TranslationPos.yaml
+    RequestPostEngineTranslate:
+      $ref: ./components/schemas/requests/PostEngineTranslate.yaml
     ResponseError:
       $ref: ./components/schemas/responses/Error.yaml
-    ResponseGetUsers:
-      $ref: ./components/schemas/responses/GetUsers.yaml
-    ResponseGetUsersId:
-      $ref: ./components/schemas/responses/GetUsersId.yaml
+    ResponseGetCeds:
+      $ref: ./components/schemas/responses/GetCeds.yaml
+    ResponseGetCedsId:
+      $ref: ./components/schemas/responses/GetCedsId.yaml
+    ResponseGetEngineTranslate:
+      $ref: ./components/schemas/responses/GetEngineTranslate.yaml
+    ResponseGetUserProjects:
+      $ref: ./components/schemas/responses/GetUserProjects.yaml
+    ResponseGetUserProjectsId:
+      $ref: ./components/schemas/responses/GetUserProjectsId.yaml

@@ -1,0 +1,25 @@
+type: object
+description:
+  $ref: "./descriptions/Project.md"
+required:
+  - id
+  - name
+  - description
+  - created_on
+  - words_count
+  - owner
+properties:
+  id:
+    type: integer
+    format: int64
+  name:
+    type: string
+  description:
+    type: string
+  created_on:
+    type: string
+  words_count:
+    type: integer
+    format: int64
+  owner:
+    $ref: "./Owner.yaml"

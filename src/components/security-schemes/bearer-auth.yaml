@@ -1,0 +1,4 @@
+type: http
+scheme: bearer
+description:
+  $ref: "./descriptions/bearer-auth.md"

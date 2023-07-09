@@ -1,0 +1,6 @@
+type: string
+description:
+  $ref: "./descriptions/PronunciationType.md"
+enum:
+  - "IPA"
+  - "katakana"

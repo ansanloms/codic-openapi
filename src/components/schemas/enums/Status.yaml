@@ -1,7 +1,0 @@
-type: string
-description:
-  $ref: "./descriptions/Status.md"
-enum:
-  - "admin"
-  - "member"
-  - "guest"

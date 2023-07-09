@@ -1,0 +1,23 @@
+id: 1234
+title: term
+digest: 期間、学期
+pronunciations:
+  - type: IPA
+    text: "/tɜːm/"
+    labels: []
+  - type: katakana
+    text: ターム
+    labels: []
+translations:
+  - etymology: 1
+    pos: noun
+    text: 学期
+    labels:
+      - computing
+    note:
+  - etymology: 1
+    pos: noun
+    text: 期間
+    labels: []
+    note:
+note:
