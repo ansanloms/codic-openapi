@@ -1,0 +1,696 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Codic API
+  description: |
+    # codic-openapi
+
+    [Codic API](https://codic.jp/docs/api) の [OpenAPI](https://www.openapis.org/) 定義(Unofficial)。
+
+    ## API リファレンス
+
+    codic API は、codic のリソースへアクセスするための RESTful (JSON) なインタフェースをアプリケーション開発者へ提供します。API を利用するためには、[アクセストークン](https://codic.jp/docs/api#authorization)が必要です。
+
+    ### ホスト
+
+    すべての API リクエストは、以下のホストを経由して提供されます。
+
+    ```
+    https://api.codic.jp
+    ```
+
+    ### アクセス制限
+
+    リソースを公平に分配するため、一定時間アクセス可能な回数に制限があります（レートリミットと言います）。最大アクセス数はプラン毎に異なります。最大アクセス数を超えてしまった場合は、API ステータスのページよりリセットしてください。
+
+    ### 認証
+
+    すべての API アクセスには、アクセストークンをリクエストヘッダーに含める必要があります。アクセストークンは[サインアップ](https://codic.jp/signup)後、API ステータスのページで確認できます。アクセストークンは、ユーザーを識別する情報のため適切に管理してください。また定期的にリセットすることをおすすめします。
+
+    ```
+    GET /v1/xxx.json HTTP/1.1
+    Host: api.codic.jp
+    Authorization: Bearer YOUR_ACCESS_TOKEN
+    ```
+
+    ### レスポンスコード
+
+    成功時レスポンスコード 200 を返します。エラーが発生した場合、API は 400, 500 番台のエラーコードと共に、エラー情報を返します。以下はエラー時の JSON レスポンスの例です。
+
+    ```json
+    {
+      "errors": [
+        {
+          "code": 404,
+          "message": "ページが存在しません。",
+          "context": null
+        }
+      ]
+    }
+    ```
+
+    ### バージョンアップポリシー
+
+    構造の変更、フィールドの削除などの改訂については、異なるバージョンとしてリリースされるため、クライアントが考慮すべき事はありませんが、フィールドの追加については同一バージョンで行うため、想定しないフィードルが出現した場合に、エラーとならないように考慮してください。
+servers:
+  - url: https://api.codic.jp
+    description: Production Server
+paths:
+  /v1/ced/entries/{id}.json:
+    get:
+      operationId: getCedEntriesId
+      summary: CED エントリ
+      tags:
+        - ced
+      description: |
+        codic の英和辞書 (Codic English Dictionary) のエントリーを取得します。
+      security:
+        - bearerAuth: []
+      externalDocs:
+        description: Codic API
+        url: https://codic.jp/docs/api/ced/entries/id
+      parameters:
+        - in: path
+          name: id
+          description: CED ルックアップで取得した id を指定します。
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 10
+      responses:
+        '200':
+          description: 処理成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ced'
+              examples:
+                succeeded:
+                  value:
+                    id: 1234
+                    title: term
+                    digest: 期間、学期
+                    pronunciations:
+                      - type: IPA
+                        text: /tɜːm/
+                        labels: []
+                      - type: katakana
+                        text: ターム
+                        labels: []
+                    translations:
+                      - etymology: 1
+                        pos: noun
+                        text: 学期
+                        labels:
+                          - computing
+                        note: null
+                      - etymology: 1
+                        pos: noun
+                        text: 期間
+                        labels: []
+                        note: null
+                    note: null
+        '500':
+          description: 処理失敗時
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                processingFailed:
+                  value:
+                    status: 400
+                    code: ERROR-001
+                    title: エラー
+                    detail: エラーが発生しました。
+                    instance: /users
+  /v1/ced/lookup.json:
+    get:
+      operationId: getCedLookup
+      summary: CED ルックアップ
+      tags:
+        - ced
+      description: |
+        codic の英和辞書 (Codic English Dictionary) の見出し語を前方一致検索します。
+      security:
+        - bearerAuth: []
+      externalDocs:
+        description: Codic API
+        url: https://codic.jp/docs/api/ced/lookup
+      parameters:
+        - in: query
+          name: query
+          description: 検索する文字列です。
+          required: true
+          schema:
+            type: string
+            example: 期間
+        - in: query
+          name: count
+          description: 検索結果に含める最大の件数を指定します。デフォルトは 10 です。
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 10
+            default: 10
+      responses:
+        '200':
+          description: 処理成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetCeds'
+              examples:
+                succeeded:
+                  value:
+                    '0':
+                      id: 1
+                      title: term
+                      digest: 期間、期限
+                    '1':
+                      id: 2
+                      title: terminal
+                      digest: 端末、ターミナル
+        '500':
+          description: 処理失敗時
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                processingFailed:
+                  value:
+                    status: 400
+                    code: ERROR-001
+                    title: エラー
+                    detail: エラーが発生しました。
+                    instance: /users
+  /v1/engine/translate.json:
+    get:
+      operationId: getEngineTranslate
+      summary: エンジン
+      tags:
+        - translate
+      description: |
+        codic のネーミング生成エンジンにアクセスし、ネーミング変換(和英変換)を行います。変換には、プロジェクト辞書が使われるため、パラメータにアクセス可能なプロジェクト id を含める必要があります。
+
+        > **ヒント**: この API は、パラメータで指定されたプロジェクトの所有者へ API アクセスをカウントします。
+      security:
+        - bearerAuth: []
+      externalDocs:
+        description: Codic API
+        url: https://codic.jp/docs/api/engine/translate
+      parameters:
+        - in: query
+          name: text
+          description: 変換する文字列(日本語)を設定します。文字列を改行(LF)で区切ることで、一度にまとめて変換することもできます(最大 3 件まで)。
+          required: true
+          schema:
+            type: string
+            example: こんにちわ世界
+        - in: query
+          name: project_id
+          description: 変換で使用するプロジェクト(辞書)の id を指定します。これは、自分がアクセス可能なプロジェクトである必要があります。アクセス可能なプロジェクトの id を取得するには、プロジェクト一覧を使用します。指定がない場合は、システム辞書が使われます。
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 1
+        - in: query
+          name: casing
+          description: camel, pascal, lower underscore, upper underscore, hyphen のいずれかを指定します。デフォルトは、ケースの変換は行いません(登録された単語のスペース区切りになります)。
+          required: false
+          schema:
+            $ref: '#/components/schemas/EnumCasing'
+            example: camel
+        - in: query
+          name: acronym_style
+          description: パラメータ casing に、camel, pascal のいずれかを指定した場合の頭字語(例 SOA)の処理方法を指定します。 MS naming guidelines, camel strict, literal のいずれかを指定します。それぞれの違いについては、ヘルプの頭字語オプションを参照してください。
+          required: false
+          schema:
+            $ref: '#/components/schemas/EnumAcronymStyle'
+            example: MS naming guidelines
+      responses:
+        '200':
+          description: 処理成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetEngineTranslate'
+              examples:
+                succeeded:
+                  value:
+                    '0':
+                      successful: false
+                      text: こんにちわ世界
+                      translated_text: hello_世界
+                      words:
+                        - successful: true
+                          text: こんにちわ
+                          translated_text: hello
+                          candidates:
+                            - text: hello
+                            - text: hi
+                        - successful: false
+                          text: 世界
+                          translated_text: null
+                          candidates: []
+        '500':
+          description: 処理失敗時
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                processingFailed:
+                  value:
+                    status: 400
+                    code: ERROR-001
+                    title: エラー
+                    detail: エラーが発生しました。
+                    instance: /users
+    post:
+      operationId: postEngineTranslate
+      summary: エンジン
+      tags:
+        - translate
+      description: |
+        codic のネーミング生成エンジンにアクセスし、ネーミング変換(和英変換)を行います。変換には、プロジェクト辞書が使われるため、パラメータにアクセス可能なプロジェクト id を含める必要があります。
+
+        > **ヒント**: この API は、パラメータで指定されたプロジェクトの所有者へ API アクセスをカウントします。
+      security:
+        - bearerAuth: []
+      externalDocs:
+        description: Codic API
+        url: https://codic.jp/docs/api/engine/translate
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostEngineTranslate'
+            examples:
+              normal:
+                value:
+                  text: こんにちわ世界
+                  project_id: 1
+                  casing: camel
+                  acronym_style: MS naming guidelines
+      responses:
+        '200':
+          description: 処理成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetEngineTranslate'
+              examples:
+                succeeded:
+                  value:
+                    '0':
+                      successful: false
+                      text: こんにちわ世界
+                      translated_text: hello_世界
+                      words:
+                        - successful: true
+                          text: こんにちわ
+                          translated_text: hello
+                          candidates:
+                            - text: hello
+                            - text: hi
+                        - successful: false
+                          text: 世界
+                          translated_text: null
+                          candidates: []
+        '500':
+          description: 処理失敗時
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                processingFailed:
+                  value:
+                    status: 400
+                    code: ERROR-001
+                    title: エラー
+                    detail: エラーが発生しました。
+                    instance: /users
+  /v1/user_projects.json:
+    get:
+      operationId: getUserProjects
+      summary: プロジェクト一覧
+      tags:
+        - project
+      description: |
+        ユーザーがアクセス可能なプロジェクトのリストを返します。Personal プランの場合、メンバーとして招待されたプロジェクトも含まれます。
+      security:
+        - bearerAuth: []
+      externalDocs:
+        description: Codic API
+        url: https://codic.jp/docs/api/user_projects
+      responses:
+        '200':
+          description: 処理成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetUserProjects'
+              examples:
+                succeeded:
+                  value:
+                    '0':
+                      id: 1
+                      name: My Project
+                      description: これは私のプロジェクトです。
+                      created_on: Thu, 01 Jan 2015 00:00:01 +0900
+                      words_count: 200
+                      owner:
+                        id: 9001
+                        name: 山田 太郎
+        '500':
+          description: 処理失敗時
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                processingFailed:
+                  value:
+                    status: 400
+                    code: ERROR-001
+                    title: エラー
+                    detail: エラーが発生しました。
+                    instance: /users
+  /v1/user_projects/{id}.json:
+    get:
+      operationId: getUserProjectsId
+      summary: プロジェクト
+      tags:
+        - project
+      description: |
+        ユーザーがアクセス可能なプロジェクトの情報を取得します。
+      security:
+        - bearerAuth: []
+      externalDocs:
+        description: Codic API
+        url: https://codic.jp/docs/api/user_projects/id
+      parameters:
+        - in: path
+          name: id
+          description: 取得するプロジェクトの id 。
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
+      responses:
+        '200':
+          description: 処理成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+              examples:
+                succeeded:
+                  value:
+                    id: 123
+                    name: My Project
+                    created_on: Thu, 01 Jan 2015 00:00:01 +0900
+                    words_count: 2000
+                    owner:
+                      id: 9001
+                      name: 山田 太郎
+        '500':
+          description: 処理失敗時
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                processingFailed:
+                  value:
+                    status: 400
+                    code: ERROR-001
+                    title: エラー
+                    detail: エラーが発生しました。
+                    instance: /users
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: |
+        すべての API アクセスには、アクセストークンをリクエストヘッダーに含める必要があります。アクセストークンは[サインアップ](https://codic.jp/signup)後、API ステータスのページで確認できます。アクセストークンは、ユーザーを識別する情報のため適切に管理してください。また定期的にリセットすることをおすすめします。
+
+        ```
+        GET /v1/xxx.json HTTP/1.1
+        Host: api.codic.jp
+        Authorization: Bearer YOUR_ACCESS_TOKEN
+        ```
+  schemas:
+    Candidate:
+      type: object
+      description: |
+        候補。
+      required:
+        - text
+      properties:
+        text:
+          type: string
+    Ced:
+      type: object
+      description: |
+        英和辞書 (Codic English Dictionary)。
+      required:
+        - id
+        - title
+        - digest
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        digest:
+          type: string
+        pronunciations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pronunciation'
+        translations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Translation'
+        note:
+          type: string
+          nullable: true
+    Error:
+      type: object
+      description: |
+        エラー。
+      required:
+        - code
+        - message
+        - context
+      properties:
+        code:
+          type: integer
+          description: エラーコード
+        message:
+          type: string
+          description: エラー情報
+        context:
+          type: string
+          nullable: true
+    Owner:
+      type: object
+      description: |
+        管理者。
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    Project:
+      type: object
+      description: |
+        プロジェクト。
+      required:
+        - id
+        - name
+        - description
+        - created_on
+        - words_count
+        - owner
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        created_on:
+          type: string
+        words_count:
+          type: integer
+          format: int64
+        owner:
+          $ref: '#/components/schemas/Owner'
+    Pronunciation:
+      type: object
+      description: |
+        発音。
+      required:
+        - type
+        - text
+        - labels
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumPronunciationType'
+        text:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+    Translate:
+      type: object
+      description: |
+        翻訳結果。
+      required:
+        - successful
+        - text
+        - translated_text
+        - words
+      properties:
+        successful:
+          type: boolean
+          description: 翻訳が成功したかどうか
+        text:
+          type: string
+        translated_text:
+          type: string
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/Word'
+    Translation:
+      type: object
+      description: |
+        翻訳。
+      required:
+        - etymology
+        - pos
+        - text
+        - labels
+        - note
+      properties:
+        etymology:
+          type: integer
+          format: int64
+        pos:
+          $ref: '#/components/schemas/EnumTranslationPos'
+        text:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+        note:
+          type: string
+          nullable: true
+    Word:
+      type: object
+      description: |
+        言語。
+      required:
+        - successful
+        - text
+        - translated_text
+        - candidates
+      properties:
+        successful:
+          type: boolean
+          description: 翻訳が成功したかどうか
+        text:
+          type: string
+        translated_text:
+          type: string
+        candidates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Candidate'
+    EnumAcronymStyle:
+      type: string
+      description: |
+        頭字語(例: SOA)の処理方法。
+      enum:
+        - MS naming guidelines
+        - camel strict
+        - literal
+    EnumCasing:
+      type: string
+      description: |
+        ケースの変換。
+      enum:
+        - camel
+        - pascal
+        - lower underscore
+        - upper underscore
+        - hyphen
+    EnumPronunciationType:
+      type: string
+      description: |
+        発音区分。
+      enum:
+        - IPA
+        - katakana
+    EnumTranslationPos:
+      type: string
+      description: ''
+      enum:
+        - noun
+    RequestPostEngineTranslate:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          description: 変換する文字列(日本語)を設定します。文字列を改行(LF)で区切ることで、一度にまとめて変換することもできます(最大 3 件まで)。
+        project_id:
+          type: integer
+          format: int64
+          description: 変換で使用するプロジェクト(辞書)の id を指定します。これは、自分がアクセス可能なプロジェクトである必要があります。アクセス可能なプロジェクトの id を取得するには、プロジェクト一覧を使用します。指定がない場合は、システム辞書が使われます。
+        casing:
+          $ref: '#/components/schemas/EnumCasing'
+          description: camel, pascal, lower underscore, upper underscore, hyphen のいずれかを指定します。デフォルトは、ケースの変換は行いません(登録された単語のスペース区切りになります)。
+        acronym_style:
+          $ref: '#/components/schemas/EnumAcronymStyle'
+          description: パラメータ casing に、camel, pascal のいずれかを指定した場合の頭字語(例 SOA)の処理方法を指定します。 MS naming guidelines, camel strict, literal のいずれかを指定します。それぞれの違いについては、ヘルプの頭字語オプションを参照してください。
+    ResponseError:
+      type: array
+      items:
+        $ref: '#/components/schemas/Error'
+    ResponseGetCeds:
+      type: array
+      items:
+        $ref: '#/components/schemas/Ced'
+    ResponseGetCedsId:
+      $ref: '#/components/schemas/Ced'
+    ResponseGetEngineTranslate:
+      type: array
+      items:
+        $ref: '#/components/schemas/Translate'
+    ResponseGetUserProjects:
+      type: array
+      items:
+        $ref: '#/components/schemas/Project'
+    ResponseGetUserProjectsId:
+      $ref: '#/components/schemas/Project'
