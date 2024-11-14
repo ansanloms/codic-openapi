@@ -1,0 +1,42 @@
+get:
+  operationId: getUserProjectsId
+  summary: プロジェクト
+  tags:
+    - project
+  description:
+    $ref: ./descriptions/getUserProjectsId.md
+  security:
+    - bearerAuth: []
+  externalDocs:
+    description: Codic API
+    url: https://codic.jp/docs/api/user_projects/id
+  parameters:
+    - in: path
+      name: id
+      description: 取得するプロジェクトの id 。
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 123
+  responses:
+    200:
+      description: 処理成功時
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseGetUserProjectsId.yaml
+          examples:
+            succeeded:
+              value:
+                $ref: ../examples/ResponseGetUserProjectsId.yaml
+    500:
+      description: 処理失敗時
+      content:
+        application/problem+json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            processingFailed:
+              value:
+                $ref: ../examples/ResponseError.yaml

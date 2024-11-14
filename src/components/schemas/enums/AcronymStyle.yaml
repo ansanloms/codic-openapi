@@ -1,7 +1,0 @@
-type: string
-description:
-  $ref: "./descriptions/AcronymStyle.md"
-enum:
-  - "MS naming guidelines"
-  - "camel strict"
-  - "literal"

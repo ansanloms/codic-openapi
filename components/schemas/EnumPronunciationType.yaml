@@ -1,0 +1,6 @@
+type: string
+description:
+  $ref: ./descriptions/EnumPronunciationType.md
+enum:
+  - IPA
+  - katakana

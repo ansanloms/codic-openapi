@@ -1,0 +1,17 @@
+type: object
+required:
+  - text
+properties:
+  text:
+    type: string
+    description: 変換する文字列(日本語)を設定します。文字列を改行(LF)で区切ることで、一度にまとめて変換することもできます(最大 3 件まで)。
+  project_id:
+    type: integer
+    format: int64
+    description: 変換で使用するプロジェクト(辞書)の id を指定します。これは、自分がアクセス可能なプロジェクトである必要があります。アクセス可能なプロジェクトの id を取得するには、プロジェクト一覧を使用します。指定がない場合は、システム辞書が使われます。
+  casing:
+    $ref: ./EnumCasing.yaml
+    description: camel, pascal, lower underscore, upper underscore, hyphen のいずれかを指定します。デフォルトは、ケースの変換は行いません(登録された単語のスペース区切りになります)。
+  acronym_style:
+    $ref: ./EnumAcronymStyle.yaml
+    description: パラメータ casing に、camel, pascal のいずれかを指定した場合の頭字語(例 SOA)の処理方法を指定します。 MS naming guidelines, camel strict, literal のいずれかを指定します。それぞれの違いについては、ヘルプの頭字語オプションを参照してください。

@@ -1,0 +1,65 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Codic API
+  description:
+    $ref: ./README.md
+servers:
+  - url: "https://api.codic.jp"
+    description: Production Server
+paths:
+  "/v1/ced/entries/{id}.json":
+    $ref: "./paths/v1.ced.entries.{id}.json.yaml"
+  /v1/ced/lookup.json:
+    $ref: ./paths/v1.ced.lookup.json.yaml
+  /v1/engine/translate.json:
+    $ref: ./paths/v1.engine.translate.json.yaml
+  /v1/user_projects.json:
+    $ref: ./paths/v1.user_projects.json.yaml
+  "/v1/user_projects/{id}.json":
+    $ref: "./paths/v1.user_projects.{id}.json.yaml"
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: ./components/security-schemes/bearer-auth.yaml
+  schemas:
+    Candidate:
+      $ref: ./components/schemas/Candidate.yaml
+    Ced:
+      $ref: ./components/schemas/Ced.yaml
+    Error:
+      $ref: ./components/schemas/Error.yaml
+    Owner:
+      $ref: ./components/schemas/Owner.yaml
+    Project:
+      $ref: ./components/schemas/Project.yaml
+    Pronunciation:
+      $ref: ./components/schemas/Pronunciation.yaml
+    Translate:
+      $ref: ./components/schemas/Translate.yaml
+    Translation:
+      $ref: ./components/schemas/Translation.yaml
+    Word:
+      $ref: ./components/schemas/Word.yaml
+    EnumAcronymStyle:
+      $ref: ./components/schemas/EnumAcronymStyle.yaml
+    EnumCasing:
+      $ref: ./components/schemas/EnumCasing.yaml
+    EnumPronunciationType:
+      $ref: ./components/schemas/EnumPronunciationType.yaml
+    EnumTranslationPos:
+      $ref: ./components/schemas/EnumTranslationPos.yaml
+    RequestPostEngineTranslate:
+      $ref: ./components/schemas/RequestPostEngineTranslate.yaml
+    ResponseError:
+      $ref: ./components/schemas/ResponseError.yaml
+    ResponseGetCeds:
+      $ref: ./components/schemas/ResponseGetCeds.yaml
+    ResponseGetCedsId:
+      $ref: ./components/schemas/ResponseGetCedsId.yaml
+    ResponseGetEngineTranslate:
+      $ref: ./components/schemas/ResponseGetEngineTranslate.yaml
+    ResponseGetUserProjects:
+      $ref: ./components/schemas/ResponseGetUserProjects.yaml
+    ResponseGetUserProjectsId:
+      $ref: ./components/schemas/ResponseGetUserProjectsId.yaml

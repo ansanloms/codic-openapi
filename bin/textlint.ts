@@ -1,10 +1,8 @@
-import { cli } from "npm:textlint";
-import "../textlint-rules.ts";
+import { cli } from "textlint";
 
-const result = await cli.execute(Deno.args.join(" "));
+import _1 from "@proofdict/textlint-rule-proofdict";
+import _2 from "textlint-filter-rule-comments";
+import _3 from "textlint-rule-preset-ja-spacing";
+import _4 from "textlint-rule-preset-ja-technical-writing";
 
-if (result !== 0 && Deno.args.some((v) => v.trim() === "--fix")) {
-  await cli.execute(Deno.args.filter((v) => v.trim() !== "--fix").join(" "));
-}
-
-Deno.exit(result);
+Deno.exit(Deno.args.join(" "));

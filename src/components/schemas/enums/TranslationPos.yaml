@@ -1,5 +1,0 @@
-type: string
-description:
-  $ref: "./descriptions/TranslationPos.md"
-enum:
-  - "noun"
