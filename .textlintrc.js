@@ -24,13 +24,13 @@ module.exports = {
       // https://github.com/textlint-ja/textlint-rule-no-mix-dearu-desumasu
       "no-mix-dearu-desumasu": {
         // 本文(Body)。
-        preferInHeader: "である",
+        preferInHeader: "ですます",
 
         // 見出し(Header)。
-        preferInBody: "である",
+        preferInBody: "ですます",
 
         // 箇条書き(List)。
-        preferInList: "である",
+        preferInList: "ですます",
 
         // 文末以外でも敬体(ですます調)と常体(である調)を厳しくチェックするかどうか。
         strict: true,
