@@ -13,5 +13,6 @@ properties:
     type: string
     description: エラー情報
   context:
-    type: string
-    nullable: true
+    type:
+      - string
+      - "null"

@@ -20,5 +20,6 @@ properties:
     items:
       type: string
   note:
-    type: string
-    nullable: true
+    type:
+      - string
+      - "null"

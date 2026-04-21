@@ -22,5 +22,6 @@ properties:
     items:
       $ref: "./Translation.yaml"
   note:
-    type: string
-    nullable: true
+    type:
+      - string
+      - "null"
