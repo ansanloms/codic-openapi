@@ -8,10 +8,10 @@ required:
 properties:
   code:
     type: integer
-    description: エラーコード
+    description: エラーコード。
   message:
     type: string
-    description: エラー情報
+    description: エラー情報。
   context:
     type:
       - string

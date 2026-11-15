@@ -1,10 +1,10 @@
 get:
-  operationId: getUserProjects
-  summary: プロジェクト一覧
+  operationId: getV1UserProjectsJson
+  summary: プロジェクト一覧。
   tags:
     - project
   description:
-    $ref: ./descriptions/getUserProjects.md
+    $ref: ./descriptions/getV1UserProjectsJson.md
   security:
     - bearerAuth: []
   externalDocs:
@@ -12,7 +12,7 @@ get:
     url: https://codic.jp/docs/api/user_projects
   responses:
     200:
-      description: 処理成功時
+      description: 処理成功時。
       content:
         application/json:
           schema:
@@ -20,9 +20,9 @@ get:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetUserProjects.yaml
+                $ref: ../examples/ResponseGetUserProjects/default.yaml
     500:
-      description: 処理失敗時
+      description: 処理失敗時。
       content:
         application/problem+json:
           schema:
@@ -30,4 +30,4 @@ get:
           examples:
             processingFailed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml
