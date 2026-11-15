@@ -1,10 +1,10 @@
 get:
-  operationId: getCedEntriesId
-  summary: CED エントリ
+  operationId: getV1CedEntriesIdJson
+  summary: CED エントリ。
   tags:
     - ced
   description:
-    $ref: ./descriptions/getCedEntriesId.md
+    $ref: ./descriptions/getV1CedEntriesIdJson.md
   security:
     - bearerAuth: []
   externalDocs:
@@ -13,7 +13,7 @@ get:
   parameters:
     - in: path
       name: id
-      description: CED ルックアップで取得した id を指定します。
+      description: CED ルックアップで取得した id を指定する。
       required: true
       schema:
         type: integer
@@ -21,7 +21,7 @@ get:
         example: 10
   responses:
     200:
-      description: 処理成功時
+      description: 処理成功時。
       content:
         application/json:
           schema:
@@ -29,9 +29,9 @@ get:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetCedsId.yaml
+                $ref: ../examples/ResponseGetCedsId/default.yaml
     500:
-      description: 処理失敗時
+      description: 処理失敗時。
       content:
         application/problem+json:
           schema:
@@ -39,4 +39,4 @@ get:
           examples:
             processingFailed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml

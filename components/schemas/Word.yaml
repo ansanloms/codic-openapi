@@ -9,7 +9,7 @@ required:
 properties:
   successful:
     type: boolean
-    description: 翻訳が成功したかどうか
+    description: 翻訳が成功したかどうか。
   text:
     type: string
   translated_text:

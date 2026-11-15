@@ -1,10 +1,10 @@
 get:
-  operationId: getEngineTranslate
-  summary: エンジン
+  operationId: getV1EngineTranslateJson
+  summary: エンジン。
   tags:
     - translate
   description:
-    $ref: ./descriptions/getEngineTranslate.md
+    $ref: ./descriptions/getV1EngineTranslateJson.md
   security:
     - bearerAuth: []
   externalDocs:
@@ -13,14 +13,14 @@ get:
   parameters:
     - in: query
       name: text
-      description: 変換する文字列(日本語)を設定します。文字列を改行(LF)で区切ることで、一度にまとめて変換することもできます(最大 3 件まで)。
+      description: 変換する文字列(日本語)を設定する。文字列を改行(LF)で区切ることで、一度にまとめて変換できる(最大 3 件まで)。
       required: true
       schema:
         type: string
         example: こんにちわ世界
     - in: query
       name: project_id
-      description: 変換で使用するプロジェクト(辞書)の id を指定します。これは、自分がアクセス可能なプロジェクトである必要があります。アクセス可能なプロジェクトの id を取得するには、プロジェクト一覧を使用します。指定がない場合は、システム辞書が使われます。
+      description: 変換で使用するプロジェクト(辞書)の id を指定する。これは、自分がアクセス可能なプロジェクトである必要がある。アクセス可能なプロジェクトの id を取得するには、プロジェクト一覧を使用する。指定がない場合は、システム辞書が使われる。
       required: false
       schema:
         type: integer
@@ -28,21 +28,21 @@ get:
         example: 1
     - in: query
       name: casing
-      description: camel, pascal, lower underscore, upper underscore, hyphen のいずれかを指定します。デフォルトは、ケースの変換は行いません(登録された単語のスペース区切りになります)。
+      description: "`camel, pascal, lower underscore, upper underscore, hyphen` のいずれかを指定する。デフォルトは、ケースの変換は行わない(登録された単語のスペース区切りになる)。"
       required: false
       schema:
         $ref: ../components/schemas/EnumCasing.yaml
         example: camel
     - in: query
       name: acronym_style
-      description: パラメータ casing に、camel, pascal のいずれかを指定した場合の頭字語(例 SOA)の処理方法を指定します。 MS naming guidelines, camel strict, literal のいずれかを指定します。それぞれの違いについては、ヘルプの頭字語オプションを参照してください。
+      description: パラメータ casing に、camel, pascal のいずれかを指定した場合の頭字語(例 SOA)の処理方法を指定する。 MS naming guidelines, camel strict, literal のいずれかを指定する。それぞれの違いについては、ヘルプの頭字語オプションを参照すること。
       required: false
       schema:
         $ref: ../components/schemas/EnumAcronymStyle.yaml
         example: MS naming guidelines
   responses:
     200:
-      description: 処理成功時
+      description: 処理成功時。
       content:
         application/json:
           schema:
@@ -50,9 +50,9 @@ get:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetEngineTranslate.yaml
+                $ref: ../examples/ResponseGetEngineTranslate/default.yaml
     500:
-      description: 処理失敗時
+      description: 処理失敗時。
       content:
         application/problem+json:
           schema:
@@ -60,14 +60,14 @@ get:
           examples:
             processingFailed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml
 post:
-  operationId: postEngineTranslate
-  summary: エンジン
+  operationId: postV1EngineTranslateJson
+  summary: エンジン。
   tags:
     - translate
   description:
-    $ref: ./descriptions/postEngineTranslate.md
+    $ref: ./descriptions/postV1EngineTranslateJson.md
   security:
     - bearerAuth: []
   externalDocs:
@@ -81,10 +81,10 @@ post:
         examples:
           normal:
             value:
-              $ref: ../examples/RequestPostEngineTranslate.yaml
+              $ref: ../examples/RequestPostEngineTranslate/default.yaml
   responses:
     200:
-      description: 処理成功時
+      description: 処理成功時。
       content:
         application/json:
           schema:
@@ -92,9 +92,9 @@ post:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetEngineTranslate.yaml
+                $ref: ../examples/ResponseGetEngineTranslate/default.yaml
     500:
-      description: 処理失敗時
+      description: 処理失敗時。
       content:
         application/problem+json:
           schema:
@@ -102,4 +102,4 @@ post:
           examples:
             processingFailed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml

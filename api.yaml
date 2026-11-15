@@ -5,23 +5,26 @@ info:
   description:
     $ref: ./README.md
 servers:
-  - url: "https://api.codic.jp"
+  - url: https://api.codic.jp
     description: Production Server
 paths:
-  "/v1/ced/entries/{id}.json":
-    $ref: "./paths/v1.ced.entries.{id}.json.yaml"
+  /v1/ced/entries/{id}.json:
+    $ref: ./paths/v1.ced.entries.{id}.json.yaml
   /v1/ced/lookup.json:
     $ref: ./paths/v1.ced.lookup.json.yaml
   /v1/engine/translate.json:
     $ref: ./paths/v1.engine.translate.json.yaml
   /v1/user_projects.json:
     $ref: ./paths/v1.user_projects.json.yaml
-  "/v1/user_projects/{id}.json":
-    $ref: "./paths/v1.user_projects.{id}.json.yaml"
+  /v1/user_projects/{id}.json:
+    $ref: ./paths/v1.user_projects.{id}.json.yaml
 components:
   securitySchemes:
     bearerAuth:
-      $ref: ./components/security-schemes/bearer-auth.yaml
+      type: http
+      scheme: bearer
+      description:
+        $ref: ./components/security-schemes/descriptions/bearer-auth.md
   schemas:
     Candidate:
       $ref: ./components/schemas/Candidate.yaml

@@ -1,10 +1,10 @@
 get:
-  operationId: getUserProjectsId
-  summary: プロジェクト
+  operationId: getV1UserProjectsIdJson
+  summary: プロジェクト。
   tags:
     - project
   description:
-    $ref: ./descriptions/getUserProjectsId.md
+    $ref: ./descriptions/getV1UserProjectsIdJson.md
   security:
     - bearerAuth: []
   externalDocs:
@@ -21,7 +21,7 @@ get:
         example: 123
   responses:
     200:
-      description: 処理成功時
+      description: 処理成功時。
       content:
         application/json:
           schema:
@@ -29,9 +29,9 @@ get:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetUserProjectsId.yaml
+                $ref: ../examples/ResponseGetUserProjectsId/default.yaml
     500:
-      description: 処理失敗時
+      description: 処理失敗時。
       content:
         application/problem+json:
           schema:
@@ -39,4 +39,4 @@ get:
           examples:
             processingFailed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml

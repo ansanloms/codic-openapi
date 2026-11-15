@@ -1,10 +1,10 @@
 get:
-  operationId: getCedLookup
-  summary: CED ルックアップ
+  operationId: getV1CedLookupJson
+  summary: CED ルックアップ。
   tags:
     - ced
   description:
-    $ref: ./descriptions/getCedLookup.md
+    $ref: ./descriptions/getV1CedLookupJson.md
   security:
     - bearerAuth: []
   externalDocs:
@@ -13,14 +13,14 @@ get:
   parameters:
     - in: query
       name: query
-      description: 検索する文字列です。
+      description: 検索する文字列である。
       required: true
       schema:
         type: string
         example: 期間
     - in: query
       name: count
-      description: 検索結果に含める最大の件数を指定します。デフォルトは 10 です。
+      description: 検索結果に含める最大の件数を指定する。デフォルトは 10 である。
       required: false
       schema:
         type: integer
@@ -29,7 +29,7 @@ get:
         default: 10
   responses:
     200:
-      description: 処理成功時
+      description: 処理成功時。
       content:
         application/json:
           schema:
@@ -37,9 +37,9 @@ get:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetCeds.yaml
+                $ref: ../examples/ResponseGetCeds/default.yaml
     500:
-      description: 処理失敗時
+      description: 処理失敗時。
       content:
         application/problem+json:
           schema:
@@ -47,4 +47,4 @@ get:
           examples:
             processingFailed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml
