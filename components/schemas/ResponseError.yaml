@@ -1,3 +1,5 @@
 type: array
+description:
+  $ref: "./descriptions/ResponseError.md"
 items:
   $ref: ./Error.yaml

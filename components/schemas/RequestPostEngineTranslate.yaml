@@ -1,4 +1,6 @@
 type: object
+description:
+  $ref: "./descriptions/RequestPostEngineTranslate.md"
 required:
   - text
 properties:

@@ -13,8 +13,8 @@ get:
   parameters:
     - in: path
       name: id
-      description: CED ルックアップで取得した id を指定する。
       required: true
+      description: CED ルックアップで取得した id を指定する。
       schema:
         type: integer
         format: int64

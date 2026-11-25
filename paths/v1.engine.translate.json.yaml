@@ -13,30 +13,30 @@ get:
   parameters:
     - in: query
       name: text
-      description: 変換する文字列(日本語)を設定する。文字列を改行(LF)で区切ることで、一度にまとめて変換できる(最大 3 件まで)。
       required: true
+      description: 変換する文字列(日本語)を設定する。文字列を改行(LF)で区切ることで、一度にまとめて変換できる(最大 3 件まで)。
       schema:
         type: string
         example: こんにちわ世界
     - in: query
       name: project_id
-      description: 変換で使用するプロジェクト(辞書)の id を指定する。これは、自分がアクセス可能なプロジェクトである必要がある。アクセス可能なプロジェクトの id を取得するには、プロジェクト一覧を使用する。指定がない場合は、システム辞書が使われる。
       required: false
+      description: 変換で使用するプロジェクト(辞書)の id を指定する。これは、自分がアクセス可能なプロジェクトである必要がある。アクセス可能なプロジェクトの id を取得するには、プロジェクト一覧を使用する。指定がない場合は、システム辞書が使われる。
       schema:
         type: integer
         format: int64
         example: 1
     - in: query
       name: casing
-      description: "`camel, pascal, lower underscore, upper underscore, hyphen` のいずれかを指定する。デフォルトは、ケースの変換は行わない(登録された単語のスペース区切りになる)。"
       required: false
+      description: "`camel, pascal, lower underscore, upper underscore, hyphen` のいずれかを指定する。デフォルトは、ケースの変換は行わない(登録された単語のスペース区切りになる)。"
       schema:
         $ref: ../components/schemas/EnumCasing.yaml
         example: camel
     - in: query
       name: acronym_style
-      description: パラメータ casing に、camel, pascal のいずれかを指定した場合の頭字語(例 SOA)の処理方法を指定する。 MS naming guidelines, camel strict, literal のいずれかを指定する。それぞれの違いについては、ヘルプの頭字語オプションを参照すること。
       required: false
+      description: パラメータ casing に、camel, pascal のいずれかを指定した場合の頭字語(例 SOA)の処理方法を指定する。 MS naming guidelines, camel strict, literal のいずれかを指定する。それぞれの違いについては、ヘルプの頭字語オプションを参照すること。
       schema:
         $ref: ../components/schemas/EnumAcronymStyle.yaml
         example: MS naming guidelines
