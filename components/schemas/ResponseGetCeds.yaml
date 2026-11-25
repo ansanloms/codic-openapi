@@ -1,3 +1,5 @@
 type: array
+description:
+  $ref: "./descriptions/ResponseGetCeds.md"
 items:
   $ref: ./Ced.yaml

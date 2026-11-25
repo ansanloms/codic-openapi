@@ -1,3 +1,5 @@
 type: array
+description:
+  $ref: "./descriptions/ResponseGetUserProjects.md"
 items:
   $ref: ./Project.yaml

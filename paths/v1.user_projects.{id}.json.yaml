@@ -13,8 +13,8 @@ get:
   parameters:
     - in: path
       name: id
-      description: 取得するプロジェクトの id 。
       required: true
+      description: 取得するプロジェクトの id 。
       schema:
         type: integer
         format: int64

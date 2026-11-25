@@ -13,15 +13,15 @@ get:
   parameters:
     - in: query
       name: query
-      description: 検索する文字列である。
       required: true
+      description: 検索する文字列である。
       schema:
         type: string
         example: 期間
     - in: query
       name: count
-      description: 検索結果に含める最大の件数を指定する。デフォルトは 10 である。
       required: false
+      description: 検索結果に含める最大の件数を指定する。デフォルトは 10 である。
       schema:
         type: integer
         format: int64

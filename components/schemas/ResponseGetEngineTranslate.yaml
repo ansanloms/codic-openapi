@@ -1,3 +1,5 @@
 type: array
+description:
+  $ref: "./descriptions/ResponseGetEngineTranslate.md"
 items:
   $ref: ./Translate.yaml
